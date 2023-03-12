@@ -4,10 +4,10 @@ namespace Persistence.Interfaces
 {
     public interface IRepository
     {
-        TodoTask GetTask(Guid id);
+        TodoTask GetTask(int id);
         IEnumerable<TodoTask> GetTasks();
         void CreateTodoTask(TodoTask task);
         void UpdateTodoTask(TodoTask task);
-        void DeleteTodoTask(Guid id);
+        void DeleteTodoTask(int id);
     }
 }

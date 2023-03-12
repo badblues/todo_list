@@ -1,10 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\domain\Domain.csproj" />
   </ItemGroup>
 
