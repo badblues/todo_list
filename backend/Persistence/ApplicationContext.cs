@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Domain;
 using Microsoft.Data.SqlClient;
+using System.Configuration;
+using System.Collections.Specialized;
 
 namespace Persistence
 {
@@ -15,7 +17,9 @@ namespace Persistence
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string connectionString;
-            connectionString = @"Data Source=;Initial Catalog=TODODB;User ID=; Password=; TrustServerCertificate=True";
+            string? username = ConfigurationManager.AppSettings.Get("db_username");
+            string? password = ConfigurationManager.AppSettings.Get("db_password");
+            connectionString = @$"Data Source=;Initial Catalog=TODODB;User ID={username}; Password={password}; TrustServerCertificate=True";
             SqlConnection sqlConnection = new(connectionString);
             sqlConnection.Open();
             Console.WriteLine("CONNECTED TO MSQL SERVER.");
