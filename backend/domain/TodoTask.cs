@@ -2,9 +2,8 @@
 {
     public class TodoTask
     {
-        public TodoTask(int id, int userId, string title, string details)
+        public TodoTask(int userId, string title, string details)
         {
-            Id = id;
             UserId = userId;
             Title = title;
             Details = details;
@@ -18,6 +17,17 @@
         public string Details { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime? EditDate { get; set; }
+
+        public override String ToString()
+        {
+            String str = $"id={Id}, " +
+                $"userid={UserId}, " +
+                $"title=\"{Title}\", " +
+                $"details=\"{Details}\", " +
+                $"creation-date={CreationDate}, " +
+                $"edit-date={EditDate}";
+            return str;
+        }
     }
 }
 

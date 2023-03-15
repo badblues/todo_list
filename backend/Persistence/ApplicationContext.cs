@@ -6,7 +6,7 @@ namespace Persistence
 {
     public class ApplicationContext : DbContext
     {
-        private DbSet<TodoTask> Users { set; get; }
+        public DbSet<TodoTask> Tasks { set; get; }
         public ApplicationContext()
         {
             Database.EnsureCreated();
@@ -18,6 +18,7 @@ namespace Persistence
             connectionString = @"Data Source=;Initial Catalog=TODODB;User ID=; Password=; TrustServerCertificate=True";
             SqlConnection sqlConnection = new(connectionString);
             sqlConnection.Open();
+            Console.WriteLine("CONNECTED TO MSQL SERVER.");
             optionsBuilder.UseSqlServer(sqlConnection);
         }
     }
