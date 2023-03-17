@@ -33,7 +33,7 @@ namespace TodoList.Persistence
         public void UpdateTask(Domain.Task task)
         {
             var res = db.Tasks.SingleOrDefault(t => t.Id == task.Id);
-            res = task;
+            db.Entry(res).CurrentValues.SetValues(task);
             db.SaveChanges();
         }
 
