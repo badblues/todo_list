@@ -1,6 +1,4 @@
-﻿using TodoList.Domain;
-using TodoList.Persistence.Interfaces;
-using System.Collections.Generic;
+﻿using TodoList.Persistence.Interfaces;
 
 
 namespace TodoList.Persistence

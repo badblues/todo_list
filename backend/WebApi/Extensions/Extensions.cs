@@ -1,11 +1,10 @@
-﻿using TodoList.Domain;
-using TodoList.WebApi.Dtos;
+﻿using TodoList.WebApi.Dtos;
 
-namespace TodoList.WebApi
+namespace WebApi.Extensions
 {
     public static class Extensions
     {
-        public static TaskDto AsDto(this Domain.Task task)
+        public static TaskDto AsDto(this TodoList.Domain.Task task)
         {
             return new TaskDto
             {
