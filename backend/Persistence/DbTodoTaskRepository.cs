@@ -1,43 +1,44 @@
 ﻿using TodoList.Persistence.Interfaces;
+using TodoList.Domain;
 
 
 namespace TodoList.Persistence
 {
-    public class DbTaskRepository : ITaskRepository
+    public class DbTodoTaskRepository : ITodoTaskRepository
     {
         private ApplicationContext db;
-        public DbTaskRepository(ApplicationContext context)
+        public DbTodoTaskRepository(ApplicationContext context)
         {
             db = context;
         }
 
-        public Domain.Task? GetTask(Guid id)
+        public TodoTask? GetTodoTask(Guid id)
         {
-            Domain.Task? task = db.Tasks.Find(id);
+            TodoTask? task = db.Tasks.Find(id);
             return task;
         }
-        public IEnumerable<Domain.Task> GetTasks()
+        public IEnumerable<TodoTask> GetTodoTasks()
         {
-            List<Domain.Task> list = db.Tasks.ToList();
+            List<TodoTask> list = db.Tasks.ToList();
             return list;
         }
 
-        public void CreateTask(Domain.Task task)
+        public void CreateTodoTask(TodoTask task)
         {
             db.Tasks.Add(task);
             db.SaveChanges();
         }
 
-        public void UpdateTask(Domain.Task task)
+        public void UpdateTodoTask(TodoTask task)
         {
             var res = db.Tasks.SingleOrDefault(t => t.Id == task.Id);
             db.Entry(res).CurrentValues.SetValues(task);
             db.SaveChanges();
         }
 
-        public void DeleteTask(Guid id)
+        public void DeleteTodoTask(Guid id)
         {
-            Domain.Task? task = db.Tasks.Find(id);
+            TodoTask? task = db.Tasks.Find(id);
             if (task != null)
             {
                 db.Remove(task);

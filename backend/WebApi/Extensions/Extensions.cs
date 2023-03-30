@@ -4,9 +4,9 @@ namespace WebApi.Extensions
 {
     public static class Extensions
     {
-        public static TaskDto AsDto(this TodoList.Domain.Task task)
+        public static TodoTaskDto AsDto(this TodoList.Domain.TodoTask task)
         {
-            return new TaskDto
+            return new TodoTaskDto
             {
                 Id = task.Id,
                 UserId = task.UserId,

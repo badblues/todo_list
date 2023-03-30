@@ -2,7 +2,7 @@
 
 namespace TodoList.WebApi.Dtos
 {
-    public class InputTaskDto
+    public class InputTodoTaskDto
     {
         [Required]
         public bool Completed { get; set; }

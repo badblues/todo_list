@@ -25,7 +25,7 @@ namespace WebApi
                     var settings = config.GetSection(nameof(DbSettings)).Get<DbSettings>();
                     return new ApplicationContext(settings.ConnectionString);
                 });
-            builder.Services.AddSingleton<ITaskRepository, DbTaskRepository>();
+            builder.Services.AddSingleton<ITodoTaskRepository, DbTodoTaskRepository>();
 
             var app = builder.Build();
 

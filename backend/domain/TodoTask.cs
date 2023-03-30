@@ -1,6 +1,6 @@
 ﻿namespace TodoList.Domain
 {
-    public record Task
+    public record TodoTask
     {
         public Guid Id { get; init; }
         public Guid UserId { get; init; }
