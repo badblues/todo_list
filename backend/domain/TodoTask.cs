@@ -11,4 +11,3 @@
         public DateTime? EditDate { get; set; }
     }
 }
-
