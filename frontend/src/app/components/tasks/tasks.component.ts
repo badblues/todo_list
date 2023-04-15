@@ -23,4 +23,13 @@ export class TasksComponent implements OnInit{
         () => (this.tasks = this.tasks.filter(t => t.id !== task.id)));
   }
 
+  toggleTask(task: Task) {
+    task.completed = !task.completed;
+    this.taskService.updateTaskCompleted(task).subscribe();
+  }
+
+  addTask(task: Task) {
+    this.taskService.addTask(task).subscribe((task) => (this.tasks.push(task)));
+  }
+
 }

@@ -3,7 +3,7 @@ export interface Task {
     userId?: string;
     title: string;
     details: string;
-    creationDate: string;
+    creationDate?: string;
     editDate?: string;
     completed: boolean;
 }
