@@ -42,7 +42,7 @@ namespace TodoList.WebApi.Controllers
                 UserId = Guid.NewGuid(),
                 Title = taskDto.Title,
                 Details = taskDto.Details,
-                Completed = false,
+                Completed = taskDto.Completed,
                 CreationDate = DateTime.UtcNow,
                 EditDate = null
             };

@@ -11,7 +11,7 @@ namespace WebApi
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var config = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json", optional: false).Build();
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false).Build();
 
 
             // Add services to the container.
@@ -26,6 +26,7 @@ namespace WebApi
                     return new ApplicationContext(settings.ConnectionString);
                 });
             builder.Services.AddSingleton<ITodoTaskRepository, DbTodoTaskRepository>();
+            builder.Services.AddSingleton<IUserRepository, DbUserRepository>();
 
             var app = builder.Build();
 
@@ -35,6 +36,11 @@ namespace WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors(x => x
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 
             app.UseHttpsRedirection();
 

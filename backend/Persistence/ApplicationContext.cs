@@ -7,7 +7,8 @@ namespace TodoList.Persistence
     {
         private readonly string connectionString;
         public DbSet<TodoTask> Tasks { set; get; }
-        
+        public DbSet<User> Users { set; get; }
+
         public ApplicationContext(string connectionString)
         {
             this.connectionString = connectionString;

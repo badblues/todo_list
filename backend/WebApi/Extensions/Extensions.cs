@@ -10,6 +10,7 @@ namespace WebApi.Extensions
             {
                 Id = task.Id,
                 UserId = task.UserId,
+                Completed = task.Completed,
                 Title = task.Title,
                 Details = task.Details,
                 CreationDate = task.CreationDate,
