@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using TodoList.Persistence.Interfaces;
 using TodoList.WebApi.Dtos;
 using TodoList.WebApi.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TodoList.WebApi.Controllers
 {
     [ApiController]
     [Route("tasks")]
+    [Authorize]
     public class TodoTaskContorller : ControllerBase
     {
         private readonly ITodoTaskRepository repository;
