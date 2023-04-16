@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TodoList.Persistence.Interfaces;
 using TodoList.WebApi.Dtos;
-using WebApi.Extensions;
+using TodoList.WebApi.Extensions;
 
 namespace TodoList.WebApi.Controllers
 {

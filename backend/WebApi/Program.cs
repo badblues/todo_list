@@ -1,4 +1,5 @@
 
+using Microsoft.Extensions.Configuration;
 using TodoList.Persistence;
 using TodoList.Persistence.Configuration;
 using TodoList.Persistence.Interfaces;
@@ -25,6 +26,7 @@ namespace WebApi
                     var settings = config.GetSection(nameof(DbSettings)).Get<DbSettings>();
                     return new ApplicationContext(settings.ConnectionString);
                 });
+            builder.Services.AddSingleton<IConfiguration>(provider => config);
             builder.Services.AddSingleton<ITodoTaskRepository, DbTodoTaskRepository>();
             builder.Services.AddSingleton<IUserRepository, DbUserRepository>();
 

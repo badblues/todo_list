@@ -8,7 +8,8 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using TodoList.Domain;
 using TodoList.Persistence.Interfaces;
-using WebApi.Dtos;
+using TodoList.WebApi.Dtos;
+using TodoList.WebApi.Extensions;
 
 namespace WebApi.Controllers
 {
@@ -18,19 +19,20 @@ namespace WebApi.Controllers
     {
       
         private readonly IUserRepository repository;
-        //private readonly IConfiguration configuration;
-        private string token = "qwertyasdfghzxcvbn"; 
+        private readonly IConfiguration configuration;
 
-        public AuthController(IUserRepository repository)
+        public AuthController(IUserRepository repository, IConfiguration configuration)
         {
             this.repository = repository;
-            //this.configuration = configuration;
+            this.configuration = configuration;
         }
 
         [HttpPost("register")]
-        public ActionResult<User> Register(InputUserDto request)
+        public ActionResult<UserDto> Register(InputUserDto request)
         {
-            //TODO: CHECK EXISTING USER BY EMAIL
+            User? user = repository.GetUser(request.Email);
+            if (user != null)
+                return BadRequest("This Email already registered.");
 
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
@@ -43,9 +45,8 @@ namespace WebApi.Controllers
             };
 
             repository.CreateUser(newUser);
-            //TODO: FIGURE OUT WHAT DATA NEEDS TO BE RETURNED
 
-            return newUser;
+            return newUser.AsDto();
         }
 
         [HttpPost("login")]
@@ -82,7 +83,8 @@ namespace WebApi.Controllers
                 new Claim(ClaimTypes.Email, user.Email)
             };
 
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(this.token));
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
+                configuration.GetSection("AppSettings:Token").Value));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 

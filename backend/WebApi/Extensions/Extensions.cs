@@ -1,6 +1,6 @@
 ﻿using TodoList.WebApi.Dtos;
 
-namespace WebApi.Extensions
+namespace TodoList.WebApi.Extensions
 {
     public static class Extensions
     {
@@ -15,6 +15,14 @@ namespace WebApi.Extensions
                 Details = task.Details,
                 CreationDate = task.CreationDate,
                 EditDate = task.EditDate
+            };
+        }
+        public static UserDto AsDto(this TodoList.Domain.User user)
+        {
+            return new UserDto
+            {
+                Id = user.Id,
+                Email = user.Email
             };
         }
     }
