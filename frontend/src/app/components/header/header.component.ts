@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit{
   showAddTask!: boolean;
   userLogged!: boolean;
   showAddTaskSubscription!: Subscription;
+  userLoggedSubscription!: Subscription;
 
   constructor(
     private uiService: UiService, 
@@ -24,6 +25,9 @@ export class HeaderComponent implements OnInit{
     this.showAddTaskSubscription = this.uiService
       .onToggleAddTask()
       .subscribe(value => this.showAddTask = value);
+    this.userLoggedSubscription = this.uiService
+      .onToggleUserLogged()
+      .subscribe(value => this.userLogged = value);
   }
 
   toggleAddTask() {
@@ -31,7 +35,8 @@ export class HeaderComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getUserEmail();
+    if(this.userLogged)
+      this.getUserEmail();
   }
 
   hasRoute(route: string) {
@@ -40,8 +45,12 @@ export class HeaderComponent implements OnInit{
 
   getUserEmail() {
     this.userService.getEmail().subscribe((email) => this.userEmail = email);
-    //TODO: make it observable across the app?
-    this.userLogged = true;
+  }
+
+  onLogout() {
+    this.uiService.toggleUserLogged();
+    this.userService.logout();
+    this.router.navigate(["/login"]);
   }
 
 }

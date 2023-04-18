@@ -4,3 +4,12 @@ header {
     align-items: center;
     margin-bottom: 20px;
 }
+
+.text-btn {
+  color: white;
+  cursor: pointer;
+}
+
+.text-btn:hover {
+  color: red;
+}

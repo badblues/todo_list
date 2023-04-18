@@ -33,6 +33,10 @@ export class UserService {
     return this.http.post(this.apiUrl + '/login', user, {responseType: "text"});
   }
 
+  logout() {
+    localStorage.removeItem("userToken");
+  }
+
   refreshToken() {
 
   }

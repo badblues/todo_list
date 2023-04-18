@@ -1,8 +1,7 @@
 <header>
   <h1>{{title}}</h1>
-  <div>
-    <h4 *ngIf="userLogged">{{userEmail}}</h4>    
-  </div>
+  <h4 *ngIf="userLogged">{{userEmail}}</h4>
+  <h4 class="text-btn" *ngIf="userLogged" (click)="onLogout()">LOGOUT</h4> 
   <app-button
     *ngIf="hasRoute('/tasks')"
     color="{{showAddTask ? 'red' : 'green'}}"

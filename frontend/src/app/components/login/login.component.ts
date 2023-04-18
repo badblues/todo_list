@@ -15,7 +15,10 @@ export class LoginComponent implements OnInit {
   email!: string;
   password!: string;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private uiService: UiService) {}
 
   ngOnInit(): void {
     if (localStorage.getItem("userToken"))
@@ -44,6 +47,7 @@ export class LoginComponent implements OnInit {
         if (token) {
           localStorage.setItem('userToken', token)
           this.router.navigate(["/tasks"]);
+          this.uiService.toggleUserLogged();
         } else {
           alert("Wrond email or password");
         }

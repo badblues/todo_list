@@ -1,5 +1,6 @@
-<div [ngClass]="{completed: task.completed}" class="task" (dblclick)="onToggle(task)">
+<div [ngClass]="{completed: task.completed}" class="task">
     <h3>
+      <input type="checkbox" (change)="onToggle(task)" [checked]="task.completed">
       {{ task.title }}
       <fa-icon
         (click)="onDelete(task)"
@@ -7,8 +8,6 @@
         [icon]="faTimes">
       </fa-icon>
     </h3>
-    <p>{{ task.creationDate }}</p>
     <p>{{ task.details }}</p>
-    <p>{{ task.completed }}</p>
 </div>
  
