@@ -29,7 +29,7 @@ export class UserService {
       }),
       responseType: 'text'
     };
-    //TODO: whack
+    //TODO: handle http errors and use httpOptions
     return this.http.post(this.apiUrl + '/login', user, {responseType: "text"});
   }
 

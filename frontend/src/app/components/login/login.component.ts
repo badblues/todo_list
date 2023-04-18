@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/User';
+import { UiService } from 'src/app/services/ui.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -8,12 +10,17 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   email!: string;
   password!: string;
 
   constructor(private userService: UserService, private router: Router) {}
+
+  ngOnInit(): void {
+    if (localStorage.getItem("userToken"))
+      this.router.navigate(["/tasks"]);
+  }
 
   onSubmit() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,9 +40,14 @@ export class LoginComponent {
 
   login(user: User) {
     this.userService.login(user).subscribe(
-      (token: string) => localStorage.setItem('userToken', token));
-    //TODO: navigate in case of successful login
-    this.router.navigate(['/tasks'])
+      (token: string) =>  {
+        if (token) {
+          localStorage.setItem('userToken', token)
+          this.router.navigate(["/tasks"]);
+        } else {
+          alert("Wrond email or password");
+        }
+      });
   }
 
 }

@@ -1,9 +1,10 @@
 <header>
   <h1>{{title}}</h1>
-  <h1>{{userEmail}}</h1>
-  <h1>^</h1>
+  <div>
+    <h4 *ngIf="userLogged">{{userEmail}}</h4>    
+  </div>
   <app-button
-    *ngIf="hasRoute('/')"
+    *ngIf="hasRoute('/tasks')"
     color="{{showAddTask ? 'red' : 'green'}}"
     text="{{showAddTask ? 'CLOSE' : 'ADD'}}"
     (btnClick)="toggleAddTask()"
