@@ -3,5 +3,7 @@
     public interface IUserService
     {
         public string GetUserEmail();
+
+        public Guid GetUserId();
     }
 }

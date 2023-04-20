@@ -21,5 +21,15 @@ namespace TodoList.WebApi.Services.UserService
             }
             return result;
         }
+
+        public Guid GetUserId()
+        {
+            if (httpContextAccessor != null)
+            {
+                string id = httpContextAccessor.HttpContext.User.FindFirstValue("userId");
+                return Guid.Parse(id);
+            }
+            return Guid.Empty;
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace TodoList.WebApi.Dtos
         public bool Completed { get; set; }
         [Required]
         public string Title { get; set; }
-        [Required]
+        
         public string Details { get; set; }
     }
 }

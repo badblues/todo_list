@@ -4,6 +4,9 @@ using TodoList.Persistence.Interfaces;
 using TodoList.WebApi.Dtos;
 using TodoList.WebApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using TodoList.WebApi.Services.UserService;
+
+//TODO: CRUD in context of different users
 
 namespace TodoList.WebApi.Controllers
 {
@@ -13,16 +16,20 @@ namespace TodoList.WebApi.Controllers
     public class TodoTaskContorller : ControllerBase
     {
         private readonly ITodoTaskRepository repository;
+        private readonly IUserService userService;
 
-        public TodoTaskContorller(ITodoTaskRepository repository)
+        public TodoTaskContorller(ITodoTaskRepository repository, IUserService userService)
         {
             this.repository = repository;
+            this.userService = userService;
         }
 
         [HttpGet]
         public IEnumerable<TodoTaskDto> GetTodoTasks()
         {
-            var tasks = repository.GetTodoTasks().Select( task => task.AsDto());
+            var tasks = repository.GetTodoTasks()
+                .Where(task => task.UserId == userService.GetUserId())
+                .Select( task => task.AsDto());
             return tasks;
         }
 
@@ -30,7 +37,7 @@ namespace TodoList.WebApi.Controllers
         public ActionResult<TodoTaskDto> GetTodoTask(Guid id)
         {
             var task = repository.GetTodoTask(id);
-            if (task is null)
+            if (task is null || task.UserId != userService.GetUserId())
                 return NotFound();
             return task.AsDto();
         }
@@ -41,7 +48,7 @@ namespace TodoList.WebApi.Controllers
             TodoTask task = new()
             {
                 Id = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                UserId = userService.GetUserId(),
                 Title = taskDto.Title,
                 Details = taskDto.Details,
                 Completed = taskDto.Completed,
@@ -56,7 +63,7 @@ namespace TodoList.WebApi.Controllers
         public ActionResult UpdateTodoTask(Guid id, InputTodoTaskDto taskDto)
         {
             var existingTask = repository.GetTodoTask(id);
-            if (existingTask is null)
+            if (existingTask is null || existingTask.UserId != userService.GetUserId())
             {
                 return NotFound();
             }
@@ -75,7 +82,7 @@ namespace TodoList.WebApi.Controllers
         public ActionResult DeleteTask(Guid id)
         {
             var existingTask = repository.GetTodoTask(id);
-            if (existingTask is null)
+            if (existingTask is null || existingTask.UserId != userService.GetUserId())
             {
                 return NotFound();
             }

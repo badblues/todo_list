@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit{
 
   ngOnInit(): void {
     if (localStorage.getItem("userToken"))
-      this.router.navigate(["/tasks"]);
+      this.router.navigate([""]);
   }
 
   onSubmit() {
@@ -42,6 +42,7 @@ export class RegisterComponent implements OnInit{
 
   register(user: User) {
     this.userService.register(user).subscribe();
+    this.router.navigate(["\login"]);
   }
 
 }

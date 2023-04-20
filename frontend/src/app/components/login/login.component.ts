@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (localStorage.getItem("userToken"))
-      this.router.navigate(["/tasks"]);
+      this.router.navigate([""]);
   }
 
   onSubmit() {
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
       (token: string) =>  {
         if (token) {
           localStorage.setItem('userToken', token)
-          this.router.navigate(["/tasks"]);
+          this.router.navigate([""]);
           this.uiService.toggleUserLogged();
         } else {
           alert("Wrond email or password");

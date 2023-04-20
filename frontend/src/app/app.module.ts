@@ -19,7 +19,7 @@ import { UserInterceptor } from './services/user.interceptor';
 
 const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
-  {path: 'tasks', component: TasksComponent},
+  {path: '', component: TasksComponent},
   {path: 'about', component: AboutComponent},
   {path: 'register', component: RegisterComponent}
 ]
