@@ -1,4 +1,10 @@
 <app-add-task (onAddTask)="addTask($event)"></app-add-task>
+<button mat-button [matMenuTriggerFor]="menu">{{sortBy}}</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="onSortSelected('newest')">newest</button>
+  <button mat-menu-item (click)="onSortSelected('oldest')">oldest</button>
+  <button mat-menu-item (click)="onSortSelected('alphabethical')">alphabethical</button>
+</mat-menu>
 <app-task-item
   *ngFor="let task of tasks" [task]="task"
   (onDeleteTask)="deleteTask(task)"

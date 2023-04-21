@@ -17,8 +17,10 @@ export class RegisterComponent implements OnInit{
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
-    if (localStorage.getItem("userToken"))
+    if (localStorage.getItem("userToken")) {
       this.router.navigate([""]);
+      return;
+    }
   }
 
   onSubmit() {
