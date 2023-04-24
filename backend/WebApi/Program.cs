@@ -29,6 +29,8 @@ namespace WebApi
             builder.Services.AddSingleton<ApplicationContext> (serviceProvider =>
                 {
                     var settings = config.GetSection(nameof(DbSettings)).Get<DbSettings>();
+                    if (settings is null)
+                      throw new Exception("Database configuration not provided.");
                     return new ApplicationContext(settings.ConnectionString);
                 });
             builder.Services.AddSingleton<IConfiguration>(provider => config);

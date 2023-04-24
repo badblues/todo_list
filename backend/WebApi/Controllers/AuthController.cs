@@ -148,8 +148,11 @@ namespace WebApi.Controllers
                 new Claim("userId", user.Id.ToString())
             };
 
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
-                configuration.GetSection("AppSettings:Token").Value));
+            var secretToken = configuration.GetSection("AppSettings:Token").Value;
+
+            if (secretToken is null)
+              throw new Exception("Secret token not provided.");
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secretToken));          
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 

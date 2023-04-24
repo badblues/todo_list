@@ -14,22 +14,19 @@ namespace TodoList.WebApi.Services.UserService
 
         public string GetUserEmail()
         {
-            var result = string.Empty;
-            if (httpContextAccessor != null)
-            {
-                result = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
-            }
-            return result;
+            if ((httpContextAccessor is null) || (httpContextAccessor.HttpContext is null))
+              throw new NullReferenceException();
+                
+            return httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
         }
 
         public Guid GetUserId()
         {
-            if (httpContextAccessor != null)
-            {
-                string id = httpContextAccessor.HttpContext.User.FindFirstValue("userId");
-                return Guid.Parse(id);
-            }
-            return Guid.Empty;
+            if ((httpContextAccessor is null) || (httpContextAccessor.HttpContext is null))
+              throw new NullReferenceException();
+              
+            string id = httpContextAccessor.HttpContext.User.FindFirstValue("userId");
+            return Guid.Parse(id);
         }
     }
 }
