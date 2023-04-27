@@ -4,28 +4,28 @@ namespace TodoList.WebApi.Services.UserService
 {
     public class UserService : IUserService
     {
-        public IHttpContextAccessor httpContextAccessor { get; }
+        public IHttpContextAccessor _httpContextAccessor;
 
         public UserService(IHttpContextAccessor httpContextAccessor)
         {
-            this.httpContextAccessor = httpContextAccessor;
+            this._httpContextAccessor = httpContextAccessor;
         }
 
 
         public string GetUserEmail()
         {
-            if ((httpContextAccessor is null) || (httpContextAccessor.HttpContext is null))
+            if ((_httpContextAccessor is null) || (_httpContextAccessor.HttpContext is null))
               throw new NullReferenceException();
                 
-            return httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
+            return _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
         }
 
         public Guid GetUserId()
         {
-            if ((httpContextAccessor is null) || (httpContextAccessor.HttpContext is null))
+            if ((_httpContextAccessor is null) || (_httpContextAccessor.HttpContext is null))
               throw new NullReferenceException();
               
-            string id = httpContextAccessor.HttpContext.User.FindFirstValue("userId");
+            string id = _httpContextAccessor.HttpContext.User.FindFirstValue("userId");
             return Guid.Parse(id);
         }
     }

@@ -21,21 +21,21 @@ namespace WebApi.Controllers
     public class AuthController : ControllerBase
     {
       
-        private readonly IUserRepository repository;
-        private readonly IConfiguration configuration;
-        private readonly IUserService userService;
+        private readonly IUserRepository _repository;
+        private readonly IConfiguration _configuration;
+        private readonly IUserService _userService;
 
         public AuthController(IUserRepository repository, IConfiguration configuration, IUserService userService)
         {
-            this.repository = repository;
-            this.configuration = configuration;
-            this.userService = userService; 
+            this._repository = repository;
+            this._configuration = configuration;
+            this._userService = userService; 
         }
 
         [HttpGet, Authorize]
         public ActionResult<string> GetEmail()
         {
-            var email = userService.GetUserEmail();
+            var email = _userService.GetUserEmail();
             return email;
         }
 
@@ -46,7 +46,7 @@ namespace WebApi.Controllers
 
             User? loggedUser = null;
 
-            var users = repository.GetUsers();
+            var users = _repository.GetUsers();
             foreach ( var user in users )
             {
                 if (user.RefreshToken.Equals(refreshToken))
@@ -73,7 +73,7 @@ namespace WebApi.Controllers
         [HttpPost("register")]
         public ActionResult<UserDto> Register(InputUserDto request)
         {
-            User? user = repository.GetUser(request.Email);
+            User? user = _repository.GetUser(request.Email);
             if (user != null)
                 return BadRequest("This Email already registered.");
 
@@ -87,7 +87,7 @@ namespace WebApi.Controllers
                 PasswordSalt = passwordSalt
             };
 
-            repository.CreateUser(newUser);
+            _repository.CreateUser(newUser);
 
             return newUser.AsDto();
         }
@@ -95,7 +95,7 @@ namespace WebApi.Controllers
         [HttpPost("login")]
         public ActionResult<string> Login(InputUserDto request)
         {
-            User? user = repository.GetUser(request.Email);
+            User? user = _repository.GetUser(request.Email);
             if (user is null)
                 return BadRequest("Email not found");
 
@@ -137,7 +137,7 @@ namespace WebApi.Controllers
         };
             Response.Cookies.Append("refreshToken", updatedUser.RefreshToken, cookieOptions);
 
-            repository.UpdateUser(updatedUser);
+            _repository.UpdateUser(updatedUser);
         }
 
         private string CreateToken(User user)
@@ -148,7 +148,7 @@ namespace WebApi.Controllers
                 new Claim("userId", user.Id.ToString())
             };
 
-            var secretToken = configuration.GetSection("AppSettings:Token").Value;
+            var secretToken = _configuration.GetSection("AppSettings:Token").Value;
 
             if (secretToken is null)
               throw new Exception("Secret token not provided.");

@@ -17,10 +17,7 @@ namespace WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false).Build();
-
-
             // Add services to the container.
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

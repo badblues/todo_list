@@ -15,20 +15,20 @@ namespace TodoList.WebApi.Controllers
     [Authorize]
     public class TodoTaskContorller : ControllerBase
     {
-        private readonly ITodoTaskRepository repository;
-        private readonly IUserService userService;
+        private readonly ITodoTaskRepository _repository;
+        private readonly IUserService _userService;
 
         public TodoTaskContorller(ITodoTaskRepository repository, IUserService userService)
         {
-            this.repository = repository;
-            this.userService = userService;
+            this._repository = repository;
+            this._userService = userService;
         }
 
         [HttpGet]
         public IEnumerable<TodoTaskDto> GetTodoTasks()
         {
-            var tasks = repository.GetTodoTasks()
-                .Where(task => task.UserId == userService.GetUserId())
+            var tasks = _repository.GetTodoTasks()
+                .Where(task => task.UserId == _userService.GetUserId())
                 .Select( task => task.AsDto());
             return tasks;
         }
@@ -36,8 +36,8 @@ namespace TodoList.WebApi.Controllers
         [HttpGet("{id}")]
         public ActionResult<TodoTaskDto> GetTodoTask(Guid id)
         {
-            var task = repository.GetTodoTask(id);
-            if (task is null || task.UserId != userService.GetUserId())
+            var task = _repository.GetTodoTask(id);
+            if (task is null || task.UserId != _userService.GetUserId())
                 return NotFound();
             return task.AsDto();
         }
@@ -48,22 +48,22 @@ namespace TodoList.WebApi.Controllers
             TodoTask task = new()
             {
                 Id = Guid.NewGuid(),
-                UserId = userService.GetUserId(),
+                UserId = _userService.GetUserId(),
                 Title = taskDto.Title,
                 Details = taskDto.Details,
                 Completed = taskDto.Completed,
                 CreationDate = DateTime.UtcNow,
                 EditDate = null
             };
-            repository.CreateTodoTask(task);
+            _repository.CreateTodoTask(task);
             return CreatedAtAction(nameof(GetTodoTask), new {id = task.Id}, task.AsDto());
         }
 
         [HttpPut("{id}")]
         public ActionResult UpdateTodoTask(Guid id, InputTodoTaskDto taskDto)
         {
-            var existingTask = repository.GetTodoTask(id);
-            if (existingTask is null || existingTask.UserId != userService.GetUserId())
+            var existingTask = _repository.GetTodoTask(id);
+            if (existingTask is null || existingTask.UserId != _userService.GetUserId())
             {
                 return NotFound();
             }
@@ -74,19 +74,19 @@ namespace TodoList.WebApi.Controllers
                 Completed = taskDto.Completed,
                 EditDate = DateTime.UtcNow
             };
-            repository.UpdateTodoTask(updatedTask);
+            _repository.UpdateTodoTask(updatedTask);
             return NoContent();
         }
 
         [HttpDelete]
         public ActionResult DeleteTask(Guid id)
         {
-            var existingTask = repository.GetTodoTask(id);
-            if (existingTask is null || existingTask.UserId != userService.GetUserId())
+            var existingTask = _repository.GetTodoTask(id);
+            if (existingTask is null || existingTask.UserId != _userService.GetUserId())
             {
                 return NotFound();
             }
-            repository.DeleteTodoTask(id);
+            _repository.DeleteTodoTask(id);
             return NoContent();
         }
     }
