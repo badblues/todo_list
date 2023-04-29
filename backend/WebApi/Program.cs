@@ -31,8 +31,8 @@ namespace WebApi
                     return new ApplicationContext(settings.ConnectionString);
                 });
             builder.Services.AddSingleton<IConfiguration>(provider => config);
-            builder.Services.AddSingleton<ITodoTaskRepository, DbTodoTaskRepository>();
-            builder.Services.AddSingleton<IUserRepository, DbUserRepository>();
+            builder.Services.AddScoped<ITodoTaskRepository, DbTodoTaskRepository>();
+            builder.Services.AddScoped<IUserRepository, DbUserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
