@@ -16,7 +16,7 @@ namespace WebApi
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false).Build();
+            builder.Configuration.AddJsonFile("appsettings.json", optional: false);
             // Add services to the container.
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -25,12 +25,12 @@ namespace WebApi
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddSingleton<ApplicationContext> (serviceProvider =>
                 {
-                    var settings = config.GetSection(nameof(DbSettings)).Get<DbSettings>();
+                    var settings = builder.Configuration.GetSection(nameof(DbSettings)).Get<DbSettings>();
                     if (settings is null)
                       throw new Exception("Database configuration not provided.");
                     return new ApplicationContext(settings.ConnectionString);
                 });
-            builder.Services.AddSingleton<IConfiguration>(provider => config);
+            builder.Services.AddSingleton<IConfiguration>(provider => builder.Configuration);
             builder.Services.AddScoped<ITodoTaskRepository, DbTodoTaskRepository>();
             builder.Services.AddScoped<IUserRepository, DbUserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
@@ -41,7 +41,7 @@ namespace WebApi
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                            config.GetSection("AppSettings:Token").Value)),
+                            builder.Configuration.GetSection("AppSettings:Token").Value)),
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
