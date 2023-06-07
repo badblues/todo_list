@@ -7,6 +7,8 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class UiService {
   private showAddTask: boolean = false;
   private userLogged!: boolean;
+  private selectedSort!: string;
+  private selectedSortSubject = new BehaviorSubject<string>(this.selectedSort);
   private addTaskSubject = new BehaviorSubject<boolean>(this.showAddTask);
   private userLoggedSubject = new BehaviorSubject<boolean>(this.userLogged);
 
@@ -35,5 +37,13 @@ export class UiService {
     return this.userLoggedSubject.asObservable();
   }
 
+  selectSort(sort: string): void {
+    this.selectedSort = sort;
+    this.selectedSortSubject.next(this.selectedSort)
+  }
+
+  onSortSelected(): Observable<string> {
+    return this.selectedSortSubject.asObservable();
+  }
 
 }

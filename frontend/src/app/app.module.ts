@@ -4,8 +4,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; 
 import { RouterModule, Routes } from '@angular/router';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -19,6 +17,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserInterceptor } from './services/user.interceptor';
+import { SortMenuComponent } from './components/sort-menu/sort-menu.component';
 
 
 
@@ -41,6 +40,7 @@ const appRoutes: Routes = [
     FooterComponent,
     LoginComponent,
     RegisterComponent,
+    SortMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,8 +48,6 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
-    MatMenuModule,
-    MatButtonModule,
     BrowserAnimationsModule
   ],
   providers: [ {
