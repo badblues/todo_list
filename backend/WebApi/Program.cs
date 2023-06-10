@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TodoList.Persistence;
@@ -23,12 +24,10 @@ namespace WebApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddHttpContextAccessor();
-            builder.Services.AddSingleton<ApplicationContext> (serviceProvider =>
+            var dbSettings = builder.Configuration.GetSection(nameof(DbSettings)).Get<DbSettings>();
+            builder.Services.AddDbContext<ApplicationContext> (options =>
                 {
-                    var settings = builder.Configuration.GetSection(nameof(DbSettings)).Get<DbSettings>();
-                    if (settings is null)
-                      throw new Exception("Database configuration not provided.");
-                    return new ApplicationContext(settings.ConnectionString);
+                     options.UseNpgsql(dbSettings.ConnectionString);
                 });
             builder.Services.AddSingleton<IConfiguration>(provider => builder.Configuration);
             builder.Services.AddScoped<ITodoTaskRepository, DbTodoTaskRepository>();

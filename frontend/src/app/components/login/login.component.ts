@@ -28,32 +28,11 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(this.email)) {
-      alert('Incorrect email!');
-    }
-    if (this.password.length < 8) {
-      alert('Password too short!');
-    }
-
     var user = {
       email: this.email,
       password: this.password,
     }
-    this.login(user);
-  }
-
-  login(user: User) {
-    this.userService.login(user).subscribe(
-      (token: string) =>  {
-        if (token) {
-          localStorage.setItem('userToken', token)
-          this.uiService.toggleUserLogged();
-          this.router.navigate([""]);
-        } else {
-          alert("Wrond email or password");
-        }
-      });
+    this.userService.login(user);
   }
 
 }

@@ -15,7 +15,6 @@ export class SortMenuComponent {
 
   toggleMenu(): void {
     this.isOpen = !this.isOpen;
-    console.log(this.isOpen);
   }
 
   onSelect(sort: string): void {

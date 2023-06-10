@@ -127,14 +127,14 @@ namespace WebApi.Controllers
                 RefreshToken = newRefreshToken,
                 RefreshTokenCreated = DateTime.UtcNow,
                 RefreshTokenExpires = DateTime.UtcNow.AddDays(7)
-        };
+            };
 
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
                 //workaround to avoid error
                 Expires = new DateTime(DateTime.UtcNow.Ticks + TimeSpan.FromDays(7).Ticks, DateTimeKind.Utc)
-        };
+            };
             Response.Cookies.Append("refreshToken", updatedUser.RefreshToken, cookieOptions);
 
             _repository.UpdateUser(updatedUser);

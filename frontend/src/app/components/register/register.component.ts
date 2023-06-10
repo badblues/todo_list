@@ -27,12 +27,15 @@ export class RegisterComponent implements OnInit{
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(this.email)) {
       alert('Incorrect email!');
+      return;
     }
     if (this.password.length < 8) {
       alert('Password too short!');
+      return;
     }
     if (this.password !== this.confirmPassword) {
       alert('Passwords don\'t match!');
+      return;
     }
 
     var newUser = {

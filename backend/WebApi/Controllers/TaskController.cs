@@ -6,8 +6,6 @@ using TodoList.WebApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using TodoList.WebApi.Services.UserService;
 
-//TODO: CRUD in context of different users
-
 namespace TodoList.WebApi.Controllers
 {
     [ApiController]

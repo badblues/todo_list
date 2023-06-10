@@ -11,6 +11,6 @@
       text="{{showAddTask ? 'CLOSE' : 'ADD'}}"
       (btnClick)="toggleAddTask()"
     ></app-button>
-    <app-sort-menu></app-sort-menu>
+    <app-sort-menu *ngIf="hasRoute('/')"></app-sort-menu>
   </div>
 </header>
