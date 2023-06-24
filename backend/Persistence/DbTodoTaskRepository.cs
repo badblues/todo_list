@@ -6,43 +6,43 @@ namespace TodoList.Persistence
 {
     public class DbTodoTaskRepository : ITodoTaskRepository
     {
-        private ApplicationContext db;
+        private ApplicationContext _applicationContext;
         public DbTodoTaskRepository(ApplicationContext context)
         {
-            db = context;
+            _applicationContext = context;
         }
 
         public TodoTask? GetTodoTask(Guid id)
         {
-            TodoTask? task = db.Tasks.Find(id);
+            TodoTask? task = _applicationContext.Tasks.Find(id);
             return task;
         }
         public IEnumerable<TodoTask> GetTodoTasks()
         {
-            List<TodoTask> list = db.Tasks.ToList();
+            List<TodoTask> list = _applicationContext.Tasks.ToList();
             return list;
         }
 
         public void CreateTodoTask(TodoTask task)
         {
-            db.Tasks.Add(task);
-            db.SaveChanges();
+            _applicationContext.Tasks.Add(task);
+            _applicationContext.SaveChanges();
         }
 
         public void UpdateTodoTask(TodoTask task)
         {
-            var res = db.Tasks.SingleOrDefault(t => t.Id == task.Id);
-            db.Entry(res).CurrentValues.SetValues(task);
-            db.SaveChanges();
+            var res = _applicationContext.Tasks.SingleOrDefault(t => t.Id == task.Id);
+            _applicationContext.Entry(res).CurrentValues.SetValues(task);
+            _applicationContext.SaveChanges();
         }
 
         public void DeleteTodoTask(Guid id)
         {
-            TodoTask? task = db.Tasks.Find(id);
+            TodoTask? task = _applicationContext.Tasks.Find(id);
             if (task != null)
             {
-                db.Remove(task);
-                db.SaveChanges();
+                _applicationContext.Remove(task);
+                _applicationContext.SaveChanges();
             }
         }
 

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaderResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/models/User';
+import { UiService } from './ui.service';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -9,9 +11,9 @@ import { User } from 'src/app/models/User';
 })
 export class UserService {
 
-  private apiUrl = 'http://localhost:5000/auth';
+  private apiUrl = 'http://localhost:5055/auth';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private uiService: UiService, private router: Router) { }
 
   register(user: User): Observable<User> {
     var httpOptions = {
@@ -22,19 +24,29 @@ export class UserService {
     return this.http.post<User>(this.apiUrl + '/register', user, httpOptions);
   }
 
-  login(user: User): Observable<string> {
+  login(user: User){
     var httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
-      responseType: 'text'
+      responseType: 'text' as 'json',
     };
-    //TODO: handle http errors and use httpOptions
-    return this.http.post(this.apiUrl + '/login', user, {responseType: "text"});
+    this.http.post(this.apiUrl + '/login', user, httpOptions).subscribe(
+      (token) => {
+        if (token) {
+          localStorage.setItem('userToken', token.toString())
+          this.uiService.toggleUserLogged();
+          this.router.navigate([""]);
+        } else {
+          alert("Wrond email or password");
+        }
+      }
+    );
   }
 
   logout() {
     localStorage.removeItem("userToken");
+    this.router.navigate(["/login"]);
   }
 
   refreshToken() {

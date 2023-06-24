@@ -1,8 +1,24 @@
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 20px;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-btn {
+  flex-flow: row;
+}
+
+
+.title {
+  flex-basis: 100%;
+}
+
+.email {
+  margin-right: 10px;
 }
 
 .text-btn {

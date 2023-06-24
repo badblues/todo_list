@@ -27,7 +27,10 @@ export class HeaderComponent implements OnInit{
       .subscribe(value => this.showAddTask = value);
     this.userLoggedSubscription = this.uiService
       .onToggleUserLogged()
-      .subscribe(value => this.userLogged = value);
+      .subscribe(value => {
+        this.userLogged = value;
+        this.getUserEmail();
+      });
   }
 
   toggleAddTask() {

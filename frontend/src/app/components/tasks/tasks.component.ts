@@ -3,6 +3,8 @@ import { TaskService } from  'src/app/services/task.service';
 import { Task } from 'src/app/models/Task';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Subscription } from 'rxjs';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-tasks',
@@ -24,10 +26,16 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 })
 export class TasksComponent implements OnInit{
   tasks: Task[] = []
-  sortBy: string = "newest";
-  incompleteFirst: boolean = false;
-
-  constructor(private taskService: TaskService, private router: Router) {
+  selectedSort: string = "";
+  selectedSortSubscription!: Subscription;
+  
+  constructor(private uiService: UiService, private taskService: TaskService, private router: Router) {
+    this.selectedSortSubscription = this.uiService
+      .onSortSelected()
+      .subscribe(value => {
+        this.selectedSort = value;
+        this.sortTasks();
+      });
   }
 
   ngOnInit(): void {
@@ -36,6 +44,7 @@ export class TasksComponent implements OnInit{
       return;
     }
     this.taskService.getTasks().subscribe((tasks)=> this.tasks = tasks);
+    this.sortTasks();
   }
 
   deleteTask(task: Task) {
@@ -52,10 +61,38 @@ export class TasksComponent implements OnInit{
 
   addTask(task: Task) {
     this.taskService.addTask(task).subscribe((task) => (this.tasks.push(task)));
+    this.sortTasks();
   }
 
-  onSortSelected(sortBy: string) {
-    this.sortBy = sortBy;
+  sortTasks(): void {
+    switch (this.selectedSort) {
+      case "newest":
+        this.tasks.sort((a, b) => {
+          //useless if statement, creationDate is always not null
+          if (a.creationDate != null && b.creationDate != null) {
+            var dateA = new Date(a.creationDate);
+            var dateB = new Date(b.creationDate);
+            return dateB.getTime() - dateA.getTime();
+          }
+          return 0;
+        });
+        break;
+      case "oldest":
+        this.tasks.sort((a, b) => {
+          if (a.creationDate != null && b.creationDate != null) {
+            var dateA = new Date(a.creationDate);
+            var dateB = new Date(b.creationDate);
+            return dateA.getTime() - dateB.getTime();
+          }
+          return 0;
+        });
+        break;
+      case "alphabetical":
+        this.tasks.sort((a, b) => {
+          return a.title < b.title ? -1 : 1;
+        });
+        break;
+    }
   }
 
 }
