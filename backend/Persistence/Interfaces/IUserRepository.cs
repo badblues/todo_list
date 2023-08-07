@@ -1,14 +1,8 @@
-﻿using TodoList.Domain;
+using TodoList.Domain;
 
-namespace TodoList.Persistence.Interfaces
+namespace TodoList.Persistence.Interfaces;
+
+public interface IUserRepository : IRepository<User>
 {
-    public interface IUserRepository
-    {
-        User? GetUser(Guid id);
-        User? GetUser(string email);
-        IEnumerable<User> GetUsers();
-        void CreateUser(User task);
-        void UpdateUser(User task);
-        void DeleteUser(Guid id);
-    }
+    User? Get(string email);
 }

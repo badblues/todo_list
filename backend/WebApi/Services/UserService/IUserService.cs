@@ -1,9 +1,8 @@
-﻿namespace TodoList.WebApi.Services.UserService
-{
-    public interface IUserService
-    {
-        public string GetUserEmail();
+﻿namespace TodoList.WebApi.Services;
 
-        public Guid GetUserId();
-    }
+public interface IUserService
+{
+    public string? GetUserEmail();
+
+    public Guid? GetUserId();
 }
