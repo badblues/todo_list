@@ -46,7 +46,14 @@ const Tasks = (props) => {
 
   return (
     <>
-      {addTaskVisible ? <AddTask /> : null}
+      {addTaskVisible ? (
+        <AddTask
+          onAddTask={() => {
+            fetchData();
+          }}
+          tasksApiService={tasksApiService}
+        />
+      ) : null}
       <div className="tasks-container">
         {tasks.map((task) => (
           <div

@@ -1,12 +1,17 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-const AddTask = () => {
+const AddTask = (props) => {
   const { register, handleSubmit, formState } = useForm();
   const { errors } = formState;
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const { tasksApiService, onAddTask } = props;
+
+  const onSubmit = async (data) => {
+    try {
+      await tasksApiService.createTask(data);
+      onAddTask();
+    } catch (error) {}
   };
 
   return (
