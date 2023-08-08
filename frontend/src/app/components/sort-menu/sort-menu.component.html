@@ -1,8 +1,0 @@
-<div class="dropdown">
-  <button class="btn btn-primary dropdown-toggle" type="button" (click)="toggleMenu()">
-    {{ selectedSort || 'Select an item' }}
-  </button>
-  <div class="dropdown-menu" *ngIf="isOpen">
-    <a class="dropdown-item" *ngFor="let item of sortItems" (click)="onSelect(item)">{{ item }}</a>
-  </div>
-</div>

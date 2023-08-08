@@ -1,0 +1,27 @@
+.navbar {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-btn.pressed {
+  background-color: red;
+}
+
+.title {
+  flex-basis: 100%;
+}
+
+.email {
+  margin-right: 10px;
+}
+
+.text-btn {
+  color: white;
+  cursor: pointer;
+}
+
+.text-btn:hover {
+  color: red;
+}

@@ -1,0 +1,14 @@
+.tasks-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-item {
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.task-item.completed {
+  color:grey;
+}
