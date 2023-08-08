@@ -17,7 +17,7 @@ public class UserService : IUserService
         if ((_httpContextAccessor is null) || (_httpContextAccessor.HttpContext is null))
             throw new NullReferenceException();
             
-        return _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
+        return _httpContextAccessor.HttpContext.User.FindFirstValue("email");
     }
 
     public Guid? GetUserId()
@@ -25,7 +25,7 @@ public class UserService : IUserService
         if ((_httpContextAccessor is null) || (_httpContextAccessor.HttpContext is null))
             throw new NullReferenceException();
             
-        string? id = _httpContextAccessor.HttpContext.User.FindFirstValue("userId");
+        string? id = _httpContextAccessor.HttpContext.User.FindFirstValue("id");
         if (id is null)
             return null;
         return Guid.Parse(id);
