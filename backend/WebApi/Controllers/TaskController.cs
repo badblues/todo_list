@@ -79,7 +79,7 @@ namespace TodoList.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public ActionResult DeleteTask(Guid id)
         {
             var existingTask = _repository.Get(id);
