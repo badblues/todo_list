@@ -2,13 +2,27 @@ import React, { createContext, Component } from "react";
 
 export const UiContext = createContext({});
 
+export const Sorts = {
+  ALPHABETICAL: "Alphabetical",
+  OLD: "Old",
+  NEW: "New",
+};
+
 export class UiContextProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
       addTaskVisible: false,
-      toggleAddTaskVisible: this.toggleAddTaskVisible.bind(this)
+      sort: Sorts.ALPHABETICAL,
+      toggleAddTaskVisible: this.toggleAddTaskVisible.bind(this),
+      setSort: this.setSort.bind(this),
     };
+  }
+
+  setSort(sort) {
+    this.setState({
+      sort: sort,
+    });
   }
 
   toggleAddTaskVisible() {
@@ -16,6 +30,7 @@ export class UiContextProvider extends Component {
     this.setState({
       addTaskVisible: visible,
     });
+    console.log(this.state);
   }
 
   render() {

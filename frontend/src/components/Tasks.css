@@ -1,14 +1,52 @@
 .tasks-container {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .task-item {
-  margin: 5px;
-  padding: 10px 20px;
+  width: 100%;
+  min-height: 80px;
+  height: fit-content;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+}
+
+.task-text {
+  max-width: 95%;
+  margin: 5px;
+  flex-grow: 1;
+  padding: 10px 20px;
+  border: solid;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .task-item.completed {
-  color:grey;
+  color: grey;
+}
+
+.text {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.delete-btn {
+  width: 30px;
+  margin: 5px 0px 5px 5px;
+  min-height: 100%;
+  flex-shrink: 0;
+  background-color: transparent;
+  border: solid;
+  border-radius: 5px;
+  border-color: white;
+  color: white;
+  cursor: pointer;
+}
+
+.delete-btn.completed {
+  color: grey;
+  border-color: grey;
 }

@@ -5,7 +5,7 @@ import { UserContext } from "../contexts/UserContext";
 import { UiContext } from "../contexts/UiContext";
 
 const Navbar = () => {
-  const { logout } = useContext(UserContext);
+  const { user, logout } = useContext(UserContext);
   const { addTaskVisible, toggleAddTaskVisible } = useContext(UiContext);
 
   const navigate = useNavigate();
@@ -21,15 +21,27 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <button
-        className={`btn add-btn ${addTaskVisible ? "pressed" : ""}`}
-        onClick={onAddTask}
-      >
-        {addTaskVisible ? "CLOSE" : "ADD TASK"}
-      </button>
-      <button className="btn" onClick={onLogout}>
-        LOG OUT
-      </button>
+      <div className="container">
+        <h1 className="title">TODO-LIST</h1>
+        {user.loggedIn ? (
+          <div>
+            <button
+              className={`btn add-btn ${addTaskVisible ? "pressed" : ""}`}
+              onClick={onAddTask}
+            >
+              {addTaskVisible ? "CLOSE" : "ADD TASK"}
+            </button>
+          </div>
+        ) : null}
+      </div>
+      {user.loggedIn ? (
+        <div className="mini-profile">
+          <label>{user.email}</label>
+          <button className="btn log-out-btn" onClick={onLogout}>
+            LOG OUT
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 };
