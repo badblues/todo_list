@@ -1,6 +1,5 @@
 import React, { createContext, Component } from "react";
 import AuthApiService from "../services/AuthApiService";
-import jwtDecode from "jwt-decode";
 
 export const UserContext = createContext({});
 
@@ -11,43 +10,28 @@ export class UserContextProvider extends Component {
     this.state = {
       user: this.loadUser(),
       login: this.login.bind(this),
+      refreshLogin: this.refreshLogin.bind(this),
       logout: this.logout.bind(this),
       registerUser: this.register.bind(this),
     };
   }
 
-  login(authData) {
-    return this.authService.login(authData).then((token) => {
-      if (token) {
-        localStorage.setItem("userToken", token);
-        this.setUserData(token);
-        this.updateUser();
-      }
-    });
+  async login(authData) {
+    await this.authService.login(authData);
+    this.updateUser();
+  }
+
+  async refreshLogin() {
+    await this.authService.refreshLogin();
+    this.updateUser();
   }
 
   register(authData) {
     return this.authService.register(authData);
   }
 
-  setUserData(token) {
-    try {
-      const decodedToken = jwtDecode(token);
-      const userInfo = {
-        loggedIn: true,
-        id: decodedToken.id,
-        email: decodedToken.email,
-      };
-      const userInfoStr = JSON.stringify(userInfo);
-      localStorage.setItem("user", userInfoStr);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   logout() {
-    localStorage.removeItem("userToken");
-    localStorage.removeItem("user");
+    this.authService.logout();
     this.updateUser();
   }
 

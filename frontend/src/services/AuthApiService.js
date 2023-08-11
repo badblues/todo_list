@@ -1,32 +1,68 @@
-import http from "axios";
+import axios from "axios";
+import jwtDecode from "jwt-decode";
 
 export default class AuthApiService {
   apiUrl = "http://localhost:5055/auth";
 
-  httpOptions = {
-    Headers: {
-      "Content-Type": "application/json",
-    },
-  };
+  http = axios.create({
+    withCredentials: true,
+  });
 
   async login(authData) {
     const url = this.apiUrl + "/login";
     try {
-      const response = await http.post(url, authData, this.httpOptions);
-      return response.data.data.token;
+      await this.http.post(url, authData).then((response) => {
+        this.handleResponse(response);
+      });
     } catch (error) {
-      console.log(error);
       throw error;
     }
+  }
+
+  async refreshLogin() {
+    const url = this.apiUrl + "/refresh-token";
+    try {
+      await this.http.post(url).then((response) => {
+        this.handleResponse(response);
+      });
+    } catch (error) {
+      this.logout();
+    }
+  }
+
+  logout() {
+    localStorage.removeItem("userToken");
+    localStorage.removeItem("user");
   }
 
   async register(user) {
     const url = this.apiUrl + "/register";
     try {
-      const response = await http.post(url, user, this.httpOptions);
+      const response = await this.http.post(url, user, this.httpOptions);
       return response.data.data;
     } catch (error) {
       throw error.response.data.error;
+    }
+  }
+
+  handleResponse(response) {
+    const token = response.data.data.token;
+    localStorage.setItem("userToken", token);
+    this.setUserData(token);
+  }
+
+  setUserData(token) {
+    try {
+      const decodedToken = jwtDecode(token);
+      const userInfo = {
+        loggedIn: true,
+        id: decodedToken.id,
+        email: decodedToken.email,
+      };
+      const userInfoStr = JSON.stringify(userInfo);
+      localStorage.setItem("user", userInfoStr);
+    } catch (error) {
+      console.error(error);
     }
   }
 }

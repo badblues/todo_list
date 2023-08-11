@@ -12,6 +12,7 @@ const Tasks = (props) => {
   const { addTaskVisible, sort } = useContext(UiContext);
   const [tasks, setTasks] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadingMessage, setLoadingMessage] = useState("Loading");
   const navigate = useNavigate();
 
   const fetchData = async () => {
@@ -21,6 +22,9 @@ const Tasks = (props) => {
       setLoading(false);
     } catch (error) {
       console.log(error);
+      if (error.response.status == 401) {
+        setLoadingMessage("Loading error, refresh page");
+      }
     }
   };
 
@@ -77,7 +81,7 @@ const Tasks = (props) => {
   };
 
   if (loading) {
-    return <div>Loading</div>;
+    return <div>{loadingMessage}</div>;
   }
 
   return (

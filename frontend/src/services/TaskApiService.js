@@ -9,7 +9,6 @@ export default class TasksApiService {
       const response = await http.get(url);
       return response.data.data;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -20,7 +19,6 @@ export default class TasksApiService {
       const response = await http.post(url, task);
       return response.data.data;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -40,7 +38,6 @@ export default class TasksApiService {
       const response = await http.delete(url);
       return response.data.data;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }

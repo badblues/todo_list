@@ -6,15 +6,20 @@ import Tasks from "./components/Tasks";
 import TasksApiService from "./services/TaskApiService";
 import axios from "axios";
 import { Routes, Route } from "react-router-dom";
+import requestInterceptor from "./interceptors/RequestInterceptor";
+import responseErrorInterceptor from "./interceptors/ResponseInterceptor";
+import { useContext } from "react";
+import { UserContext } from "./contexts/UserContext";
 
 function App() {
-  axios.interceptors.request.use((request) => {
-    const token = localStorage.getItem("userToken");
-    if (token) {
-      request.headers["Authorization"] = "Bearer " + token;
-    }
-    return request;
-  });
+  const { refreshLogin, logout } = useContext(UserContext);
+
+  axios.interceptors.request.use(requestInterceptor);
+  axios.interceptors.response.use(
+    (response) => response,
+    (error) => responseErrorInterceptor(error, refreshLogin, logout)
+  );
+
   const tasksApiServivce = new TasksApiService();
 
   return (
