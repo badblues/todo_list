@@ -11,15 +11,6 @@ public class UserService : IUserService
         _httpContextAccessor = httpContextAccessor;
     }
 
-
-    public string? GetUserEmail()
-    {
-        if ((_httpContextAccessor is null) || (_httpContextAccessor.HttpContext is null))
-            throw new NullReferenceException();
-            
-        return _httpContextAccessor.HttpContext.User.FindFirstValue("email");
-    }
-
     public Guid? GetUserId()
     {
         if ((_httpContextAccessor is null) || (_httpContextAccessor.HttpContext is null))

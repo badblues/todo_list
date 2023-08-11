@@ -19,24 +19,11 @@ public class AuthController : ControllerBase
     
     private readonly IUserRepository _repository;
     private readonly IConfiguration _configuration;
-    private readonly IUserService _userService;
 
-    public AuthController(IUserRepository repository, IConfiguration configuration, IUserService userService)
+    public AuthController(IUserRepository repository, IConfiguration configuration)
     {
-        this._repository = repository;
-        this._configuration = configuration;
-        this._userService = userService; 
-    }
-
-    //TODO
-    [HttpGet, Authorize]
-    public ActionResult<string> GetEmail()
-    {
-        var email = _userService.GetUserEmail();
-        if (email is null)
-            return NotFound();
-        return email;
-        
+        _repository = repository;
+        _configuration = configuration;
     }
 
 
