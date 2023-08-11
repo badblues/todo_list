@@ -7,7 +7,7 @@ export default class TasksApiService {
     let url = this.apiUrl;
     try {
       const response = await http.get(url);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       console.log(error);
       throw error;
@@ -18,7 +18,7 @@ export default class TasksApiService {
     let url = this.apiUrl;
     try {
       const response = await http.post(url, task);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       console.log(error);
       throw error;
@@ -38,7 +38,7 @@ export default class TasksApiService {
     let url = this.apiUrl + `/${id}`;
     try {
       const response = await http.delete(url);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       console.log(error);
       throw error;
