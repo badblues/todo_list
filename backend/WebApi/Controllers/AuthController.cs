@@ -29,8 +29,9 @@ public class AuthController : ControllerBase
 
     //TODO
     [HttpPost("refresh-token")]
-    public ActionResult<string> RefreshToken()
+    public ActionResult<Response<AuthDTO>> RefreshToken()
     {
+        Response<AuthDTO> response = new();
         var refreshToken = Request.Cookies["refreshToken"];
 
         User? loggedUser = null;
@@ -44,18 +45,23 @@ public class AuthController : ControllerBase
 
         if (loggedUser == null)
         {
-            return Unauthorized("Invalid Refresh Token.");
+            response.Error = "Invalid Refresh Token";
+            return Unauthorized(response);
         }
         else if (loggedUser.RefreshTokenExpires < DateTime.Now)
         {
-            return Unauthorized("Token expired.");
+            response.Error = "Token expired";
+            return Unauthorized(response);
         }
 
         string token = CreateToken(loggedUser);
         string newRefreshToken = GenerateRefreshToken();
         SetRefreshToken(newRefreshToken, loggedUser);
 
-        return token;
+        response.Data = new AuthDTO {
+            Token = token
+        };
+        return response;
     }
 
 
@@ -72,7 +78,7 @@ public class AuthController : ControllerBase
 
         CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-        User newUser = new User
+        User newUser = new()
         {
             Id = Guid.NewGuid(),
             Email = request.Email,
@@ -133,7 +139,6 @@ public class AuthController : ControllerBase
 
         var cookieOptions = new CookieOptions
         {
-            HttpOnly = true,
             //workaround to avoid error
             Expires = new DateTime(DateTime.UtcNow.Ticks + TimeSpan.FromDays(7).Ticks, DateTimeKind.Utc)
         };
@@ -144,7 +149,7 @@ public class AuthController : ControllerBase
 
     private string CreateToken(User user)
     {
-        List<Claim> claims = new List<Claim>
+        List<Claim> claims = new()
         {
             new Claim("email", user.Email),
             new Claim("id", user.Id.ToString())
