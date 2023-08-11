@@ -13,7 +13,6 @@ export default class AuthApiService {
     const url = this.apiUrl + "/login";
     try {
       const response = await http.post(url, authData, this.httpOptions);
-      console.log(response)
       return response.data.data.token;
     } catch (error) {
       console.log(error);
@@ -25,10 +24,9 @@ export default class AuthApiService {
     const url = this.apiUrl + "/register";
     try {
       const response = await http.post(url, user, this.httpOptions);
-      console.log(response);
-      return response;
+      return response.data.data;
     } catch (error) {
-      throw error;
+      throw error.response.data.error;
     }
   }
 }

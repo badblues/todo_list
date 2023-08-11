@@ -1,18 +1,16 @@
 import React, { useContext, useEffect } from "react";
-import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { UserContext } from "../contexts/UserContext";
 
-const LoginPage = () => {
+const Login = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, formState } = useForm();
   const { errors } = formState;
   const { login } = useContext(UserContext);
 
   useEffect(() => {
-    if (localStorage.getItem("userToken") !== null)
-      navigate("/");
+    if (localStorage.getItem("userToken") !== null) navigate("/");
   }, []);
 
   const onLogin = async (data) => {
@@ -24,10 +22,15 @@ const LoginPage = () => {
     }
   };
 
+  const onRegister = () => {
+    navigate("/register");
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit(onLogin)}>
         <div className="form-control">
+          <h2 className="form-title">LOG IN</h2>
           <label htmlFor="email">EMAIL:</label>
           <input
             type="email"
@@ -49,10 +52,15 @@ const LoginPage = () => {
           />
           <label className="form-text">{errors.password?.message}</label>
         </div>
-        <button className="btn btn-block">LOG IN</button>
+        <button type="submit" className="btn btn-block">
+          LOG IN
+        </button>
+        <button className="btn btn-block" onClick={onRegister}>
+          REGISTER
+        </button>
       </form>
     </>
   );
 };
 
-export default LoginPage;
+export default Login;

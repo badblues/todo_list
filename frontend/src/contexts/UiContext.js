@@ -30,7 +30,6 @@ export class UiContextProvider extends Component {
     this.setState({
       addTaskVisible: visible,
     });
-    console.log(this.state);
   }
 
   render() {

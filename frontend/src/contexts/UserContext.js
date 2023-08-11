@@ -12,6 +12,7 @@ export class UserContextProvider extends Component {
       user: this.loadUser(),
       login: this.login.bind(this),
       logout: this.logout.bind(this),
+      registerUser: this.register.bind(this),
     };
   }
 
@@ -23,6 +24,10 @@ export class UserContextProvider extends Component {
         this.updateUser();
       }
     });
+  }
+
+  register(authData) {
+    return this.authService.register(authData);
   }
 
   setUserData(token) {

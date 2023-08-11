@@ -1,0 +1,18 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  transform: translate(10px);
+}
+
+.option {
+  cursor: pointer;
+}
+
+.option:hover {
+  color: red;
+}
+
+.menu-btn {
+  width: fit-content;
+  align-items: flex-start;
+}

@@ -65,10 +65,10 @@ const Tasks = (props) => {
       case Sorts.ALPHABETICAL:
       default:
         return (a, b) => {
-          if (a.title < b.title) {
+          if (a.title.toUpperCase() < b.title.toUpperCase()) {
             return -1;
           }
-          if (a.title > b.title) {
+          if (a.title.toUpperCase() > b.title.toUpperCase()) {
             return 1;
           }
           return a.id < b.id ? -1 : 1;

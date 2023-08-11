@@ -1,6 +1,7 @@
 import "./App.css";
-import LoginPage from "./components/LoginPage";
+import Login from "./components/Login";
 import Navbar from "./components/Navbar";
+import Register from "./components/Register";
 import Tasks from "./components/Tasks";
 import TasksApiService from "./services/TaskApiService";
 import axios from "axios";
@@ -20,7 +21,8 @@ function App() {
     <div className="page">
       <Navbar />
       <Routes>
-        <Route element={<LoginPage />} path="/login" />
+        <Route element={<Login />} path="/login" />
+        <Route element={<Register />} path="/register" />
         <Route element={<Tasks tasksApiService={tasksApiServivce} />} path="" />
       </Routes>
     </div>

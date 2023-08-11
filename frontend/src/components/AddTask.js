@@ -29,7 +29,7 @@ const AddTask = (props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-form">
-      <h2>ADD TASK</h2>
+      <h2 className="form-title">ADD TASK</h2>
       <div className="form-control">
         <input
           type="text"

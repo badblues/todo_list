@@ -1,13 +1,14 @@
 import React, { useContext, useState } from "react";
+import "./SortMenu.css";
 import { Sorts, UiContext } from "../contexts/UiContext";
 
 const SortMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { sort, setSort } = useContext(UiContext);
   return (
-    <div>
+    <>
       <button
-        className="btn"
+        className="menu-btn btn"
         onClick={() => {
           setIsOpen(!isOpen);
         }}
@@ -15,15 +16,37 @@ const SortMenu = () => {
         {sort}
       </button>
       {isOpen ? (
-        <div>
-          <label onClick={() => setSort(Sorts.ALPHABETICAL)}>
+        <div className="menu">
+          <label
+            className="option"
+            onClick={() => {
+              setSort(Sorts.ALPHABETICAL);
+              setIsOpen(!isOpen);
+            }}
+          >
             {Sorts.ALPHABETICAL}
           </label>
-          <label onClick={() => setSort(Sorts.OLD)}>{Sorts.OLD}</label>
-          <label onClick={() => setSort(Sorts.NEW)}>{Sorts.NEW}</label>
+          <label
+            className="option"
+            onClick={() => {
+              setSort(Sorts.OLD);
+              setIsOpen(!isOpen);
+            }}
+          >
+            {Sorts.OLD}
+          </label>
+          <label
+            className="option"
+            onClick={() => {
+              setSort(Sorts.NEW);
+              setIsOpen(!isOpen);
+            }}
+          >
+            {Sorts.NEW}
+          </label>
         </div>
       ) : null}
-    </div>
+    </>
   );
 };
 
