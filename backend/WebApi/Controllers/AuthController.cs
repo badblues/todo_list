@@ -46,12 +46,12 @@ public class AuthController : ControllerBase
         if (loggedUser == null)
         {
             response.Error = "Invalid Refresh Token";
-            return Unauthorized(response);
+            return StatusCode(403, response);
         }
         else if (loggedUser.RefreshTokenExpires < DateTime.Now)
         {
             response.Error = "Token expired";
-            return Unauthorized(response);
+            return StatusCode(403, response);
         }
 
         string token = CreateToken(loggedUser);
