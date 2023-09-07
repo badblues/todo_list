@@ -1,9 +1,9 @@
-﻿using TodoList.Domain;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TodoList.Domain;
 using TodoList.Persistence.Interfaces;
 using TodoList.WebApi.Dtos;
 using TodoList.WebApi.Extensions;
-using Microsoft.AspNetCore.Authorization;
 using TodoList.WebApi.Services;
 
 namespace TodoList.WebApi.Controllers;
@@ -28,7 +28,7 @@ public class TodoTaskContorller : ControllerBase
         Response<IEnumerable<TodoTaskDto>> response = new();
         var tasks = _repository.GetAll()
             .Where(task => task.UserId == _userService.GetUserId())
-            .Select( task => task.AsDto());
+            .Select(task => task.AsDto());
         response.Data = tasks;
         return response;
     }
@@ -38,7 +38,8 @@ public class TodoTaskContorller : ControllerBase
     {
         Response<TodoTaskDto> response = new();
         var task = _repository.Get(id);
-        if (task is null || task.UserId != _userService.GetUserId()) {
+        if (task is null || task.UserId != _userService.GetUserId())
+        {
             response.Error = "Task not found";
             return NotFound(response);
         }
@@ -51,7 +52,8 @@ public class TodoTaskContorller : ControllerBase
     {
         Response<TodoTaskDto> response = new();
         var userId = _userService.GetUserId();
-        if (userId is null) {
+        if (userId is null)
+        {
             return Unauthorized(response);
         }
         TodoTask task = new()
@@ -66,7 +68,8 @@ public class TodoTaskContorller : ControllerBase
         };
         _repository.Create(task);
         var createdTask = _repository.Get(task.Id);
-        if (createdTask is null) {
+        if (createdTask is null)
+        {
             response.Error = "Server error";
             return StatusCode(500, response);
         }
@@ -92,7 +95,8 @@ public class TodoTaskContorller : ControllerBase
         };
         _repository.Update(updatedTask);
         var savedTask = _repository.Get(updatedTask.Id);
-        if (savedTask is null || (savedTask != updatedTask)) {
+        if (savedTask is null || (savedTask != updatedTask))
+        {
             response.Error = "Server error";
             return StatusCode(500, response);
         }
@@ -111,7 +115,8 @@ public class TodoTaskContorller : ControllerBase
         }
         _repository.Delete(id);
         var deletedTask = _repository.Get(id);
-        if (deletedTask is not null) {
+        if (deletedTask is not null)
+        {
             response.Error = "Server error";
             return StatusCode(500, response);
         }

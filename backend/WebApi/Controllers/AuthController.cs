@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using TodoList.Domain;
+using TodoList.Persistence.Interfaces;
 using TodoList.WebApi.Dtos;
 using TodoList.WebApi.Extensions;
-using TodoList.Persistence.Interfaces;
-using TodoList.WebApi.Services;
 
 namespace WebApi.Controllers;
 
@@ -16,7 +14,7 @@ namespace WebApi.Controllers;
 [Route("[controller]")]
 public class AuthController : ControllerBase
 {
-    
+
     private readonly IUserRepository _repository;
     private readonly IConfiguration _configuration;
 
@@ -37,7 +35,7 @@ public class AuthController : ControllerBase
         User? loggedUser = null;
 
         var users = _repository.GetAll();
-        foreach ( var user in users )
+        foreach (var user in users)
         {
             if (user.RefreshToken.Equals(refreshToken))
                 loggedUser = user;
@@ -58,7 +56,8 @@ public class AuthController : ControllerBase
         string newRefreshToken = GenerateRefreshToken();
         SetRefreshToken(newRefreshToken, loggedUser);
 
-        response.Data = new AuthDTO {
+        response.Data = new AuthDTO
+        {
             Token = token
         };
         return response;
@@ -71,7 +70,8 @@ public class AuthController : ControllerBase
         Response<UserDto> response = new();
 
         User? user = _repository.Get(request.Email);
-        if (user != null) {
+        if (user != null)
+        {
             response.Error = "This email already registered";
             return BadRequest(response);
         }
@@ -96,16 +96,17 @@ public class AuthController : ControllerBase
     public ActionResult<Response<AuthDTO>> Login(InputUserDto request)
     {
         Response<AuthDTO> response = new();
-        
+
         User? user = _repository.Get(request.Email);
-        if (user is null) {
-            response.Error="Email not found";
+        if (user is null)
+        {
+            response.Error = "Email not found";
             return BadRequest(response);
         }
 
         if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
         {
-            response.Error="Wrong password";
+            response.Error = "Wrong password";
             return BadRequest(response);
         }
 
@@ -114,7 +115,8 @@ public class AuthController : ControllerBase
         var refreshToken = GenerateRefreshToken();
         SetRefreshToken(refreshToken, user);
 
-        response.Data = new AuthDTO {
+        response.Data = new AuthDTO
+        {
             Token = token,
         };
 
@@ -159,8 +161,8 @@ public class AuthController : ControllerBase
 
         if (secretToken is null)
             throw new Exception("Secret token not provided.");
-            
-        var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secretToken));          
+
+        var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secretToken));
 
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 

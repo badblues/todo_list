@@ -1,15 +1,13 @@
-﻿using System;
+﻿namespace TodoList.Domain;
 
-namespace TodoList.Domain
+public record TodoTask
 {
-    public record TodoTask
-    {
-        public Guid Id { get; init; }
-        public Guid UserId { get; init; }
-        public bool Completed { get; set; }
-        public string Title { get; set; } = String.Empty;
-        public string Details { get; set; } = String.Empty;
-        public DateTime CreationDate { get; set; }
-        public DateTime? EditDate { get; set; }
-    }
+    public Guid Id { get; init; }
+    public Guid UserId { get; init; }
+    public bool Completed { get; set; }
+    public string Title { get; set; } = String.Empty;
+    public string Details { get; set; } = String.Empty;
+    public DateTime CreationDate { get; set; }
+    public DateTime? EditDate { get; set; }
 }
+

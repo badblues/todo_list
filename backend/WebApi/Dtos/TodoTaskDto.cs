@@ -1,4 +1,5 @@
 ﻿namespace TodoList.WebApi.Dtos;
+
 public class TodoTaskDto
 {
     public Guid Id { get; init; }

@@ -24,5 +24,6 @@ yarn-error.log*
 
 
 .vscode
+.vs
 bin
 obj
