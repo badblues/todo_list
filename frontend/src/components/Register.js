@@ -14,7 +14,7 @@ const Register = () => {
   }, []);
 
   const onRegister = async (data) => {
-    if (data.password !== data.confirmPassword || data.password == undefined) {
+    if (data.password !== data.confirmPassword || data.password === undefined) {
       setError("password", {
         type: "manual",
         message: "Password must be the same",

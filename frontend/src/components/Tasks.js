@@ -22,7 +22,7 @@ const Tasks = (props) => {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      if (error.response.status == 401) {
+      if (error.response.status === 401) {
         setLoadingMessage("Loading error, refresh page");
       }
     }
@@ -33,7 +33,7 @@ const Tasks = (props) => {
       navigate("/login");
     }
     fetchData();
-  }, []);
+  }, [user.loggedIn]);
 
   const onChangeComplition = async (task) => {
     try {

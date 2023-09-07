@@ -18,7 +18,7 @@ const Login = () => {
       await login(data);
       navigate("/");
     } catch (error) {
-      console.log(error);
+      alert(error.response?.data?.error);
     }
   };
 
