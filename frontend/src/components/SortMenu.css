@@ -6,6 +6,8 @@
 
 .option {
   cursor: pointer;
+  font-size: 15px;
+  color: #c5c5c5;
 }
 
 .option:hover {
@@ -14,5 +16,12 @@
 
 .menu-btn {
   width: fit-content;
-  align-items: flex-start;
+  background: transparent;
+  color: #fff;
+  border: none;
+  padding: 5px 5px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  font-family: inherit;
 }
