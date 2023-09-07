@@ -2,6 +2,7 @@
 using TodoList.WebApi.Dtos;
 
 namespace TodoList.WebApi.Extensions;
+
 public static class Extensions
 {
     public static TodoTaskDto AsDto(this TodoTask task)

@@ -1,6 +1,5 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -21,9 +20,9 @@ builder.Services.AddHttpContextAccessor();
 var dbSettings = builder.Configuration.GetSection(nameof(DbSettings)).Get<DbSettings>();
 if (dbSettings is null)
     return;
-builder.Services.AddDbContext<ApplicationContext> (options =>
+builder.Services.AddDbContext<ApplicationContext>(options =>
     {
-            options.UseNpgsql(dbSettings.ConnectionString);
+        options.UseNpgsql(dbSettings.ConnectionString);
     });
 builder.Services.AddSingleton<IConfiguration>(provider => builder.Configuration);
 builder.Services.AddScoped<ITodoTaskRepository, DbTodoTaskRepository>();
@@ -34,7 +33,8 @@ var token = builder.Configuration.GetSection("AppSettings:Token").Value;
 if (token is null)
     return;
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options => {
+    .AddJwtBearer(options =>
+    {
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,

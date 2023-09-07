@@ -1,7 +1,6 @@
 ﻿using TodoList.Domain;
 using TodoList.Persistence.Interfaces;
 
-
 namespace TodoList.Persistence;
 public class DbTodoTaskRepository : ITodoTaskRepository
 {
@@ -31,7 +30,8 @@ public class DbTodoTaskRepository : ITodoTaskRepository
     public void Update(TodoTask task)
     {
         var res = _applicationContext.Tasks.SingleOrDefault(t => t.Id == task.Id);
-        if (res != null) {
+        if (res != null)
+        {
             _applicationContext.Entry(res).CurrentValues.SetValues(task);
             _applicationContext.SaveChanges();
         }

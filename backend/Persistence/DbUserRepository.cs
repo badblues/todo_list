@@ -41,7 +41,8 @@ public class DbUserRepository : IUserRepository
     public void Update(User user)
     {
         var res = _applicationContext.Users.SingleOrDefault(t => t.Id == user.Id);
-        if (res != null) {
+        if (res != null)
+        {
             _applicationContext.Entry(res).CurrentValues.SetValues(user);
             _applicationContext.SaveChanges();
         }

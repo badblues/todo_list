@@ -15,7 +15,7 @@ public class UserService : IUserService
     {
         if ((_httpContextAccessor is null) || (_httpContextAccessor.HttpContext is null))
             throw new NullReferenceException();
-            
+
         string? id = _httpContextAccessor.HttpContext.User.FindFirstValue("id");
         if (id is null)
             return null;

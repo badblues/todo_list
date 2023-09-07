@@ -1,7 +1,7 @@
 namespace TodoList.WebApi.Dtos;
 
-public class AuthDTO {
+public class AuthDTO
+{
+    public string Token { get; set; } = String.Empty;
 
-  public string Token {get; set; } = String.Empty;
-  
 }
