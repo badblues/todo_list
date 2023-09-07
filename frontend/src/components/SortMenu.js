@@ -8,7 +8,7 @@ const SortMenu = () => {
   return (
     <>
       <button
-        className="menu-btn btn"
+        className="menu-btn"
         onClick={() => {
           setIsOpen(!isOpen);
         }}

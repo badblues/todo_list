@@ -1,14 +1,14 @@
 import "./App.css";
+import axios from "axios";
+import { useContext } from "react";
+import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Register from "./components/Register";
 import Tasks from "./components/Tasks";
 import TasksApiService from "./services/TaskApiService";
-import axios from "axios";
-import { Routes, Route } from "react-router-dom";
 import requestInterceptor from "./interceptors/RequestInterceptor";
 import responseErrorInterceptor from "./interceptors/ResponseInterceptor";
-import { useContext } from "react";
 import { UserContext } from "./contexts/UserContext";
 
 function App() {

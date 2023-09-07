@@ -25,7 +25,6 @@ public class AuthController : ControllerBase
     }
 
 
-    //TODO
     [HttpPost("refresh-token")]
     public ActionResult<Response<AuthDTO>> RefreshToken()
     {

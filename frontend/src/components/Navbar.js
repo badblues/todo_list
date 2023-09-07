@@ -21,22 +21,19 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <div className="container">
-        <h1 className="title">TODO-LIST</h1>
-        {user.loggedIn ? (
-          <div>
-            <button
-              className={`btn add-btn ${addTaskVisible ? "pressed" : ""}`}
-              onClick={onAddTask}
-            >
-              {addTaskVisible ? "CLOSE" : "ADD TASK"}
-            </button>
-          </div>
-        ) : null}
-      </div>
+      {user.loggedIn ? (
+        <div>
+          <button
+            className={`btn add-btn ${addTaskVisible ? "pressed" : ""}`}
+            onClick={onAddTask}
+          >
+            {addTaskVisible ? "CLOSE" : "ADD TASK"}
+          </button>
+        </div>
+      ) : null}
       {user.loggedIn ? (
         <div className="mini-profile">
-          <label>{user.email}</label>
+          <label className="email">{user.email}</label>
           <button className="btn log-out-btn" onClick={onLogout}>
             LOG OUT
           </button>

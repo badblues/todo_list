@@ -21,8 +21,7 @@ const Tasks = (props) => {
       setTasks(tasks);
       setLoading(false);
     } catch (error) {
-      console.log(error);
-      if (error.response.status === 401) {
+      if (error.response?.status === 401) {
         setLoadingMessage("Loading error, refresh page");
       }
     }
@@ -40,18 +39,14 @@ const Tasks = (props) => {
       task.completed = !task.completed;
       await tasksApiService.updateTask(task.id, task);
       fetchData();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const onDelete = async (id) => {
     try {
       await tasksApiService.deleteTask(id);
       fetchData();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const getSortFunc = () => {
@@ -94,8 +89,7 @@ const Tasks = (props) => {
           tasksApiService={tasksApiService}
         />
       ) : null}
-      <h2>TASKS:</h2>
-      <SortMenu />
+      <SortMenu className="sort-btn" />
       <div className="tasks-container">
         {tasks.sort(getSortFunc()).map((task) => (
           <div

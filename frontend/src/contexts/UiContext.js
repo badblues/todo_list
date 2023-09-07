@@ -1,12 +1,12 @@
 import React, { createContext, Component } from "react";
 
-export const UiContext = createContext({});
-
 export const Sorts = {
   ALPHABETICAL: "Alphabetical",
   OLD: "Old",
   NEW: "New",
 };
+
+export const UiContext = createContext({});
 
 export class UiContextProvider extends Component {
   constructor(props) {

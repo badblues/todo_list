@@ -61,8 +61,6 @@ export default class AuthApiService {
       };
       const userInfoStr = JSON.stringify(userInfo);
       localStorage.setItem("user", userInfoStr);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   }
 }
